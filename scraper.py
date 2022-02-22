@@ -19,8 +19,8 @@ print("Fetching the page")
 driver.get(youtube_scraper_url)
 
 print('Get Video Divs')
-Video_div_class='ytd-video-renderer'
-video_divs=driver.find_elements_by_class_name(Video_div_class)
-print(f'found {len(video_divs)} Videos')
+Video_div_tag='ytd-video-renderer'
+video_divs=driver.find_elements_by_tag_name(Video_div_tag)
+print(video_divs)
 
 print('Page Title using Selenium',driver.title)
