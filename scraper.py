@@ -1,3 +1,5 @@
+
+import requests
 from selenium.webdriver.common.by import By
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -12,20 +14,18 @@ def get_driver():
   driver=webdriver.Chrome(options=chrome_options)
   return driver
 
+def get_videos(driver):
+  driver.get(youtube_scraper_url)
+  Video_div_tag='ytd-video-renderer'
+  driver.implicitly_wait(20)
+  videos=driver.find_elements(By.CLASS_NAME,Video_div_tag)
+  return videos
+  
 if __name__=="__main__":
   print('Creating Driver')
   driver=get_driver()
+  print("Fetching Trending videos")
+  videos=get_videos(driver)
+  print("Found:",len(videos))
 
-print("Fetching the page")
-driver.get(youtube_scraper_url)
-
-#driver.get("https://www.youtube.com/feed/trending")
-#x=driver.find_element(By.XPATH,'//a[@class="yt-simple-endpoint style-scope ytd-video-renderer"]')
-#print(x.text)
-
-print('Get Video Divs')
-Video_div_class='style-scope ytd-expanded-shelf-contents-renderer'
-video_divs=driver.find_element(By.XPATH,'yt-simple-endpoint style-scope ytd-video-renderer')
-print(video_divs)
-
-print('Page Title using Selenium',driver.title)
+print("Parsing 1st Video")
